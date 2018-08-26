@@ -1,28 +1,24 @@
-const Discord = require('discord.js');
-const client = new Discord.Client({disableEveryone: true})
-const Music = require('discord.js-musicbot-addon');
-client.login(`حط توكن بوتك هنا`)
-client.on('ready', ()=> {
-    console.log('Ready!')
-})
- Music.start(client, {
-    prefix: "!", // البرفكس هنا
-    youtubeKey: 'AIzaSyDIv8O9OwZdoTaghK3_SQmyGcQFzkXMW6E', //هنا ال yt v3 api key
-    global: false, // يكون للسيرفرات ؟ خليه false, يكون queue مشترك خليه true            
-    maxQueueSize: 50, // اقصى حجم لل queue        
-    playCmd: 'play', // امر التشغيل
-    volumeCmd: 'vol',     // امر الصوت
-    thumbnailType: 'high',
-    leaveCmd: 'stop',    // امر المغادرة
-    anyoneCanSkip: true, // تبي الكل يقدر يسوي skip? true > yep, false > nope
-    disableLoop: false, // تبي يكون فيه اعادة؟ , true > yep, false > nope
-    searchCmd: 'search', //امر البحث 
-    requesterName: true, 
-    inlineEmbeds: false,     
-    queueCmd: 'queue', // امر القائمة
-    pauseCmd: 'pause', // امر الايقاف المؤقت
-    resumeCmd: 'resume', // امر الاستمرار
-    skipCmd: 'skip', // امر السكب
-    loopCmd: 'loop', // امر الاعادة
-    enableQueueStat: true,
-  });
+const Discord = require("discord.js");
+const bot = new Discord.Client({disableEveryone: true});
+
+bot.on("ready", async () => {
+  console.log(`${bot.user.username} is online!`);
+  bot.user.setActivity(`Hey, Wassup!`);
+});
+
+bot.on("message", async message => {
+
+  if (message.author.bot) return;
+  if (message.channel.type === "dm") return;
+
+  let prefix = '-';
+  let messageArray = message.content.split(" ");
+  let cmd = messageArray[0];
+  let args = messageArray.slice(1);
+
+  if (cmd === `${prefix}ping`){
+    message.channel.send("Pong!");
+  }
+});
+
+bot.login(process.env.token);
